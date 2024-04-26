@@ -2,9 +2,12 @@ version: '3'
 services:
   db:
     image: postgres:16
+    build:
+      context: .
+      dockerfile: Dockerfile.db
     environment:
       POSTGRES_DB: yazo
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
     ports:
-      - "5432:5432"
+      - "5432:5432/tcp"
