@@ -41,7 +41,6 @@ export async function validacaoTipoUsuario(req: Request, res: Response, tipoUsua
     res.status(401).json({ message: 'Você não tem autorização para efetuar o cadastro.' });
     return false;
   } catch (err) {
-    throw new Error('Você não tem autorização para efetuar o cadastro.') as any;
     res.status(401).json({ message: 'Token inválido' });
     return false;
   }
