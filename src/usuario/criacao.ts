@@ -1,28 +1,41 @@
 import { Pool } from "pg";
 import { Request, Response } from 'express';
+import { UsuarioTipo } from "../constants";
+import { validacaoTipoUsuario } from "../common/validacaoTipoUsuario";
 
 export async function criarUsuario(req: Request, res: Response, pool: Pool) {
-    const { nome, senha, tipo } = req.body;
+    const { usuario, senha, tipo } = req.body;
 
-    if (!nome || !senha || !tipo) {
+    const isValid = validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool)
+
+    if (!isValid) {
+        return;
+    }
+    //TODO separar isso no próprio validador.
+    if (!usuario || usuario.length > 40 || !senha || !tipo || (tipo !== UsuarioTipo.ORGANIZADOR && tipo !== UsuarioTipo.PARTICIPANTE)) {
         res.status(400).json({ message: 'Por favor, preencha todos os campos corretamente.' });
         return;
     }
 
-    const hasUsuario = await pool.query('SELECT nome FROM usuarios WHERE nome = $1', [nome]);
+    const hasUsuario = await pool.query('SELECT nome FROM usuarios WHERE nome = $1', [usuario]);
 
-    if(!hasUsuario.rows.length) {
+    //TODO Separar em arquivo.
+    if (hasUsuario.rows.length) {
         res.status(400).json({ message: 'Usuário já existe.' });
-    } else if(hasUsuario.rows.pop().length > 40) {
+        return;
+    } else if (hasUsuario.rows[0]?.usuario.length > 40) {
         res.status(400).json({ message: 'Nome do usuário excede o limite.' });
+        return;
     }
 
-    //! salvar como jwt
-    const retornoBanco = await pool.query('INSERT INTO usuarios (nome, senha, tipo) VALUES ($1, $2, $3)', [nome, senha, tipo]);
+    //TODO salvar como jwt
+    const retornoBanco = await pool.query('INSERT INTO usuarios (nome, senha, tipo) VALUES ($1, $2, $3)', [usuario, senha, tipo]);
 
     if (retornoBanco.rowCount === 1) {
-        res.status(200).json({ message: `Adicionado "${nome}" ao banco.` });
+        res.status(200).json({ message: `Adicionado "${usuario}" ao banco.` });
+        return;
     } else {
         res.status(500).json({ message: 'Erro ao adicionar ao banco.' });
+        return;
     }
 }
