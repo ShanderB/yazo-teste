@@ -22,9 +22,9 @@ async function initializeDatabase(): Promise<void> {
 }
 
 initializeDatabase().then(() => {
-  console.log('Database inicializado com sucesso!')
-  process.exit(0);
-})
+    console.log('Database inicializado com sucesso!')
+    process.exit(0);
+  })
   .catch(err => {
     console.error(err);
     process.exit(1);
