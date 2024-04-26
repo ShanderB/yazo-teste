@@ -9,6 +9,15 @@ export async function criarUsuario(req: Request, res: Response, pool: Pool) {
         return;
     }
 
+    const hasUsuario = await pool.query('SELECT nome FROM usuarios WHERE nome = $1', [nome]);
+
+    if(!hasUsuario.rows.length) {
+        res.status(400).json({ message: 'Usuário já existe.' });
+    } else if(hasUsuario.rows.pop().length > 40) {
+        res.status(400).json({ message: 'Nome do usuário excede o limite.' });
+    }
+
+    //! salvar como jwt
     const retornoBanco = await pool.query('INSERT INTO usuarios (nome, senha, tipo) VALUES ($1, $2, $3)', [nome, senha, tipo]);
 
     if (retornoBanco.rowCount === 1) {
