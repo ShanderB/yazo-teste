@@ -31,20 +31,23 @@ const pool = new Pool({
 app.post('/login', async (req: Request, res: Response) => {
   const { usuario, senha } = req.body;
 
-  const response = await pool.query('SELECT * FROM usuarios WHERE nome = $1 AND senha = $2', [usuario, senha]);
-  res.json(response.rows);
+  //TODO separar em algum arquivo.
+  const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE nome = $1 AND senha = $2', [usuario, senha]);
 
+  if(!retornoBanco.rows.length){
+    res.status(400).json({ message: 'Usuário ou senha inválidos ou usuário inexistente.' });
+    return;
+  }
 
   // Se a autenticação for bem-sucedida, crie um token JWT.
-  // const token = jwt.sign({ userId: usuario, senha }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+  const token = jwt.sign({ usuario: usuario, senha }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
   // Envie o token de volta para o cliente.
-  // res.json({ token });
+  res.json({ token });
 });
 
 // Rota para criar um novo usuario.
 app.post('/usuario', async (req: Request, res: Response) => {
-  //TODO adicionar validação de permitir somente o organizador.
   criarUsuario(req, res, pool);
 });
 
@@ -54,13 +57,13 @@ app.get('/usuario', async (req: Request, res: Response) => {
   listagemUsuarios(res, pool);
 });
 
-// Rota para atualizar um item
+// Rota para atualizar um usuario.
 app.put('/usuario/:id', async (req: Request, res: Response) => {
   //TODO adicionar validação de permitir somente o organizador.
   alteracaoUsuario(req, res, pool);
 });
 
-// Rota para deletar um item
+// Rota para deletar um usuario.
 app.delete('/usuario/:id', async (req: Request, res: Response) => {
   //TODO adicionar validação de permitir somente o organizador.
   deletarUsuario(req, res, pool);
