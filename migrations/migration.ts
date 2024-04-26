@@ -14,7 +14,9 @@ const pool = new Pool({
 
 async function initializeDatabase() {
   const initScript = fs.readFileSync(path.join(__dirname, 'item.sql'), 'utf8');
-  await pool.query(initScript);
+  await pool.query(initScript)
 }
 
-initializeDatabase().catch(err => console.error(err));
+initializeDatabase().then(
+  () => console.log('Database initialized successfully!')
+).catch(err => console.error(err));
