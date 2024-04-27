@@ -6,7 +6,7 @@ import { validacaoTipoUsuario } from "../common/validacaoTipoUsuario";
 export async function criarUsuario(req: Request, res: Response, pool: Pool) {
     const { usuario, senha, tipo } = req.body;
 
-    const isValid = validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool)
+    const isValid = await validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool)
 
     if (!isValid) {
         return;
@@ -35,7 +35,7 @@ export async function criarUsuario(req: Request, res: Response, pool: Pool) {
         res.status(200).json({ message: `Adicionado "${usuario}" ao banco.` });
         return;
     } else {
-        res.status(500).json({ message: 'Erro ao adicionar ao banco.' });
+        res.status(500).json({ message: 'Erro ao adicionar novo usuário ao banco.' });
         return;
     }
 }
