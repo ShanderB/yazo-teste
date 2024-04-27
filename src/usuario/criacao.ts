@@ -17,7 +17,7 @@ export async function criarUsuario(req: Request, res: Response, pool: Pool) {
         return;
     }
 
-    const hasUsuario = await pool.query('SELECT nome FROM usuarios WHERE nome = $1', [usuario]);
+    const hasUsuario = await pool.query('SELECT usuario FROM usuarios WHERE usuario = $1', [usuario]);
 
     //TODO Separar em arquivo.
     if (hasUsuario.rows.length) {
@@ -29,7 +29,7 @@ export async function criarUsuario(req: Request, res: Response, pool: Pool) {
     }
 
     //TODO salvar como jwt
-    const retornoBanco = await pool.query('INSERT INTO usuarios (nome, senha, tipo) VALUES ($1, $2, $3)', [usuario, senha, tipo]);
+    const retornoBanco = await pool.query('INSERT INTO usuarios (usuario, senha, tipo) VALUES ($1, $2, $3)', [usuario, senha, tipo]);
 
     if (retornoBanco.rowCount === 1) {
         res.status(200).json({ message: `Adicionado "${usuario}" ao banco.` });

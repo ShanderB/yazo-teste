@@ -13,7 +13,7 @@ interface MinhaJwtPayload extends JwtPayload {
 //TODO jogar em uma interface própria
 interface UsuarioBanco {
   id: string;
-  nome: string;
+  usuario: string;
   senha: string;
   tipo: UsuarioTipo;
 }
@@ -31,7 +31,7 @@ export async function validacaoTipoUsuario(req: Request, res: Response, tipoUsua
 
 
     if (usuario && senha) {
-      const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE nome = $1 AND senha = $2', [usuario, senha]);
+      const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE usuario = $1 AND senha = $2', [usuario, senha]);
 
       if (retornoBanco.rows?.pop().tipo === tipoUsuarioPermissao) {
         return true;
