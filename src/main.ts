@@ -20,6 +20,7 @@ app.use(bodyParser.json());
  * A classe Pool é usada para criar um pool de conexões com o banco de dados.
  * Um pool de conexões é um cache de conexões de banco de dados mantido para que as conexões possam ser reutilizadas quando necessário.
  **/
+//TODO mover para arquivo próprio.
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -46,30 +47,25 @@ app.post('/login', async (req: Request, res: Response) => {
   res.json({ token });
 });
 
+
+app.route('/usuario/')
+.post(async (req: Request, res: Response) => {
 // Rota para criar um novo usuario.
-app.post('/usuario', async (req: Request, res: Response) => {
   criarUsuario(req, res, pool);
-});
-
-// Rota para obter todos os usuarios.
-app.get('/usuario', async (req: Request, res: Response) => {
+}) 
+.get(async (req: Request, res: Response) => {
   //TODO adicionar validação de permitir somente o organizador.
+  // Rota para obter todos os usuarios.
   listagemUsuarios(res, pool);
-});
-
-// Rota para atualizar um usuario.
-app.put('/usuario/:id', async (req: Request, res: Response) => {
+})
+.put(async (req: Request, res: Response) => {
   //TODO adicionar validação de permitir somente o organizador.
   alteracaoUsuario(req, res, pool);
-});
-
-// Rota para deletar um usuario.
-app.delete('/usuario/:id', async (req: Request, res: Response) => {
+})
+.delete(async (req: Request, res: Response) => {
   //TODO adicionar validação de permitir somente o organizador.
   deletarUsuario(req, res, pool);
-});
-
-
+})
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Iniciando o servidor
