@@ -7,13 +7,12 @@ import { listagemUsuarios } from './usuario/listagem';
 import { alteracaoUsuario } from './usuario/alteracao';
 import { deletarUsuario } from './usuario/deletar';
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { validacaoTipoUsuario } from './common/validacaoTipoUsuario';
 import { UsuarioTipo } from './constants';
 import { criarPergunta } from './pergunta/Criacao';
 import { criarResposta } from './resposta/resposta';
 import { listagemPerguntas } from './pergunta/Listagem';
-
+import { efetuarLogin } from './login/Login';
 require('dotenv').config();
 
 // Configurando o express
@@ -25,7 +24,6 @@ app.use(bodyParser.json());
  * A classe Pool é usada para criar um pool de conexões com o banco de dados.
  * Um pool de conexões é um cache de conexões de banco de dados mantido para que as conexões possam ser reutilizadas quando necessário.
  **/
-//TODO mover para arquivo próprio.
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -34,24 +32,14 @@ const pool = new Pool({
   port: parseInt(process.env.DB_PORT!) //passando o "!" para dizer que a variável não é nula nunca.
 });
 
+
+
 app.post('/login', async (req: Request, res: Response) => {
-  const { usuario, senha } = req.body;
-
-  //TODO separar em algum arquivo.
-  const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE usuario = $1 AND senha = $2', [usuario, senha]);
-
-  if (!retornoBanco.rows.length) {
-    res.status(400).json({ message: 'Usuário ou senha inválidos ou usuário inexistente.' });
-    return;
-  }
-  // Se a autenticação for bem-sucedida, crie um token JWT.
-  const token = jwt.sign({ usuario: usuario, senha, usuarioId: retornoBanco.rows[0].id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
-
-  // Envie o token de volta para o cliente.
-  res.json({ token });
+  efetuarLogin(req, res, pool);
 });
 
 
+//Middleware para validar o tipo de usuário
 app.use('/usuario', (req: Request, res: Response, next: NextFunction) => {
   validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next);
 })
@@ -62,22 +50,27 @@ app.use('/usuario', (req: Request, res: Response, next: NextFunction) => {
   .delete(async (req: Request, res: Response) => { deletarUsuario(req, res, pool); })
 
 
-app.route('/pergunta')
-  .post(
-    (req: Request, res: Response, next: NextFunction) => { validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next); },
-    async (req: Request, res: Response) => { criarPergunta(req, res, pool); }
-  )
-  .get(
-    (req: Request, res: Response, next: NextFunction) => { validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, pool, next); },
-    async (req: Request, res: Response) => { listagemPerguntas(req, res, pool); }
-  )
+//Devido aos diferentes tipos de autorização, é necessário adicionar o middleware separadamente para cada rota.
+app.use('/pergunta', (req: Request, res: Response, next: NextFunction) => {
+  validacaoTipoUsuario(
+    req, res,
+    (req.method === 'GET' ? UsuarioTipo.PARTICIPANTE : UsuarioTipo.ORGANIZADOR),
+    pool, next
+  );
+})
+  .route('/pergunta')
+  .post(async (req: Request, res: Response) => { criarPergunta(req, res, pool); })
+  .get(async (req: Request, res: Response) => { listagemPerguntas(req, res, pool); })
   .put(async (req: Request, res: Response) => { })
   .delete(async (req: Request, res: Response) => { })
+
 
 
 app.route('/resposta')
   .post(async (req: Request, res: Response) => { criarResposta(req, res, pool); })
 
+
+  
 // Iniciando o servidor
 app.listen(3000, () => {
   console.log('Server running on port 3000');
