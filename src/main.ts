@@ -8,10 +8,11 @@ import { alteracaoUsuario } from './usuario/alteracao';
 import { deletarUsuario } from './usuario/deletar';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { dadosJWT, validacaoTipoUsuario } from './common/validacaoTipoUsuario';
+import { validacaoTipoUsuario } from './common/validacaoTipoUsuario';
 import { UsuarioTipo } from './constants';
 import { criarPergunta } from './pergunta/Criacao';
 import { criarResposta } from './resposta/resposta';
+import { listagemPerguntas } from './pergunta/Listagem';
 
 require('dotenv').config();
 
@@ -54,7 +55,7 @@ app.post('/login', async (req: Request, res: Response) => {
 app.use('/usuario', (req: Request, res: Response, next: NextFunction) => {
   validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next);
 })
-.route('/usuario')
+  .route('/usuario')
   .post(async (req: Request, res: Response) => { criarUsuario(req, res, pool); })
   .get(async (req: Request, res: Response) => { listagemUsuarios(res, pool); })
   .put(async (req: Request, res: Response) => { alteracaoUsuario(req, res, pool); })
@@ -63,18 +64,12 @@ app.use('/usuario', (req: Request, res: Response, next: NextFunction) => {
 
 app.route('/pergunta')
   .post(
-    (req: Request, res: Response, next: NextFunction) => {
-      validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next);
-    },
+    (req: Request, res: Response, next: NextFunction) => { validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next); },
     async (req: Request, res: Response) => { criarPergunta(req, res, pool); }
   )
   .get(
-    (req: Request, res: Response, next: NextFunction) => {
-      validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, pool, next);
-    },
-    async (req: Request, res: Response) => {
-      console.log("get perguntas")
-    }
+    (req: Request, res: Response, next: NextFunction) => { validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, pool, next); },
+    async (req: Request, res: Response) => { listagemPerguntas(req, res, pool); }
   )
   .put(async (req: Request, res: Response) => { })
   .delete(async (req: Request, res: Response) => { })
