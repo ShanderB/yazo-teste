@@ -6,11 +6,6 @@ import { Pool } from "pg";
 export async function criarPergunta(req: Request, res: Response, pool: Pool) {
     const { pergunta } = req.body;
 
-    const isValid = await validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool)
-    if (!isValid) {
-        return;
-    }
-
     //TODO separar isso no próprio validador.
     if (!pergunta) {
         res.status(400).json({ message: 'Por favor, preencha todos os campos corretamente.' });

@@ -5,12 +5,6 @@ import { UsuarioTipo } from "../constants";
 
 export async function criarResposta(req: Request, res: Response, pool: Pool): Promise<void> {
 
-    const isValid = await validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, pool)
-
-    if (!isValid) {
-        return;
-    }
-
     const { idPergunta, resposta } = req.body;
 
     if (!idPergunta || !resposta) {
@@ -18,7 +12,7 @@ export async function criarResposta(req: Request, res: Response, pool: Pool): Pr
         return;
     }
 
-    //talvez posso remover. Se ao tentar inserir der erro, simplesmente ignora.
+    //TODO talvez posso remover. Se ao tentar inserir der erro, simplesmente ignora.
     const hasPergunta = await pool.query('SELECT criadoPor FROM perguntas WHERE id = $1', [idPergunta]);
 
     if (!hasPergunta.rows.length) {

@@ -1,5 +1,5 @@
 // Importando os módulos necessários
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { Pool } from 'pg';
 import bodyParser from 'body-parser';
 import { criarUsuario } from './usuario/criacao';
@@ -51,39 +51,37 @@ app.post('/login', async (req: Request, res: Response) => {
 });
 
 
-app.route('/usuario')
-  .post(async (req: Request, res: Response) => {
-    // Rota para criar um novo usuario.
-    criarUsuario(req, res, pool);
-  })
-  .get(async (req: Request, res: Response) => {
-    //TODO adicionar validação de permitir somente o organizador.
-    // Rota para obter todos os usuarios.
-    listagemUsuarios(res, pool);
-  })
-  .put(async (req: Request, res: Response) => {
-    //TODO adicionar validação de permitir somente o organizador.
-    alteracaoUsuario(req, res, pool);
-  })
-  .delete(async (req: Request, res: Response) => {
-    //TODO adicionar validação de permitir somente o organizador.
-    deletarUsuario(req, res, pool);
-  })
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.use('/usuario', (req: Request, res: Response, next: NextFunction) => {
+  validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next);
+})
+.route('/usuario')
+  .post(async (req: Request, res: Response) => { criarUsuario(req, res, pool); })
+  .get(async (req: Request, res: Response) => { listagemUsuarios(res, pool); })
+  .put(async (req: Request, res: Response) => { alteracaoUsuario(req, res, pool); })
+  .delete(async (req: Request, res: Response) => { deletarUsuario(req, res, pool); })
+
 
 app.route('/pergunta')
-  .post(async (req: Request, res: Response) => {
-    criarPergunta(req, res, pool);
-  })
-  .get(async (req: Request, res: Response) => { })
+  .post(
+    (req: Request, res: Response, next: NextFunction) => {
+      validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool, next);
+    },
+    async (req: Request, res: Response) => { criarPergunta(req, res, pool); }
+  )
+  .get(
+    (req: Request, res: Response, next: NextFunction) => {
+      validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, pool, next);
+    },
+    async (req: Request, res: Response) => {
+      console.log("get perguntas")
+    }
+  )
   .put(async (req: Request, res: Response) => { })
   .delete(async (req: Request, res: Response) => { })
 
 
 app.route('/resposta')
-  .post(async (req: Request, res: Response) => {
-    criarResposta(req, res, pool);
-  })
+  .post(async (req: Request, res: Response) => { criarResposta(req, res, pool); })
 
 // Iniciando o servidor
 app.listen(3000, () => {

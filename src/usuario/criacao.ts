@@ -6,11 +6,6 @@ import { validacaoTipoUsuario } from "../common/validacaoTipoUsuario";
 export async function criarUsuario(req: Request, res: Response, pool: Pool) {
     const { usuario, senha, tipo } = req.body;
 
-    const isValid = await validacaoTipoUsuario(req, res, UsuarioTipo.ORGANIZADOR, pool)
-
-    if (!isValid) {
-        return;
-    }
     //TODO separar isso no próprio validador.
     if (!usuario || usuario.length > 40 || !senha || !tipo || (tipo !== UsuarioTipo.ORGANIZADOR && tipo !== UsuarioTipo.PARTICIPANTE)) {
         res.status(400).json({ message: 'Por favor, preencha todos os campos corretamente.' });
