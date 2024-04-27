@@ -8,6 +8,9 @@ import { alteracaoUsuario } from './usuario/alteracao';
 import { deletarUsuario } from './usuario/deletar';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { dadosJWT, validacaoTipoUsuario } from './common/validacaoTipoUsuario';
+import { UsuarioTipo } from './constants';
+import { criarPergunta } from './pergunta/Criacao';
 
 require('dotenv').config();
 
@@ -33,40 +36,48 @@ app.post('/login', async (req: Request, res: Response) => {
   const { usuario, senha } = req.body;
 
   //TODO separar em algum arquivo.
-  const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE nome = $1 AND senha = $2', [usuario, senha]);
+  const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE usuario = $1 AND senha = $2', [usuario, senha]);
 
-  if(!retornoBanco.rows.length){
+  if (!retornoBanco.rows.length) {
     res.status(400).json({ message: 'Usuário ou senha inválidos ou usuário inexistente.' });
     return;
   }
-
   // Se a autenticação for bem-sucedida, crie um token JWT.
-  const token = jwt.sign({ usuario: usuario, senha }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+  const token = jwt.sign({ usuario: usuario, senha, usuarioId: retornoBanco.rows[0].id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
   // Envie o token de volta para o cliente.
   res.json({ token });
 });
 
 
-app.route('/usuario/')
-.post(async (req: Request, res: Response) => {
-// Rota para criar um novo usuario.
-  criarUsuario(req, res, pool);
-}) 
-.get(async (req: Request, res: Response) => {
-  //TODO adicionar validação de permitir somente o organizador.
-  // Rota para obter todos os usuarios.
-  listagemUsuarios(res, pool);
-})
-.put(async (req: Request, res: Response) => {
-  //TODO adicionar validação de permitir somente o organizador.
-  alteracaoUsuario(req, res, pool);
-})
-.delete(async (req: Request, res: Response) => {
-  //TODO adicionar validação de permitir somente o organizador.
-  deletarUsuario(req, res, pool);
-})
+app.route('/usuario')
+  .post(async (req: Request, res: Response) => {
+    // Rota para criar um novo usuario.
+    criarUsuario(req, res, pool);
+  })
+  .get(async (req: Request, res: Response) => {
+    //TODO adicionar validação de permitir somente o organizador.
+    // Rota para obter todos os usuarios.
+    listagemUsuarios(res, pool);
+  })
+  .put(async (req: Request, res: Response) => {
+    //TODO adicionar validação de permitir somente o organizador.
+    alteracaoUsuario(req, res, pool);
+  })
+  .delete(async (req: Request, res: Response) => {
+    //TODO adicionar validação de permitir somente o organizador.
+    deletarUsuario(req, res, pool);
+  })
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.route('/pergunta')
+  .post(async (req: Request, res: Response) => {
+    criarPergunta(req, res, pool);
+  })
+  .get(async (req: Request, res: Response) => { })
+  .put(async (req: Request, res: Response) => { })
+  .delete(async (req: Request, res: Response) => { })
+
 
 // Iniciando o servidor
 app.listen(3000, () => {
