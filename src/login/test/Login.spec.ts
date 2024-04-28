@@ -31,7 +31,7 @@ describe('efetuarLogin', () => {
         jwtSign = jest.spyOn(jwt, 'sign');
     });
 
-    fit('Deve retornar 400 se o usuário ou senha forem inválidos', async () => {
+    it('Deve retornar 400 se o usuário ou senha forem inválidos', async () => {
         pool.query.mockResolvedValue({ rows: [], rowCount: 0 } as never);
 
         await efetuarLogin(req as Request, res as Response, pool);
@@ -40,7 +40,7 @@ describe('efetuarLogin', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'Usuário ou senha inválidos ou usuário inexistente.' });
     });
 
-    fit('Deve retornar um token se o usuário e senha forem válidos', async () => {
+    it('Deve retornar um token se o usuário e senha forem válidos', async () => {
         const fakeUser = { id: 1, tipo: 'tipo' };
         pool.query.mockResolvedValue({ rows: [fakeUser], rowCount: 1 } as never);
         jwtSign.mockReturnValue('token');
