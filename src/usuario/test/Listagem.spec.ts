@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Response } from 'express';
-import { listagemUsuarios } from '../listagem'; // Import the listagemUsuarios function
+import { listagemUsuarios } from '../';
 
 describe('listagemUsuarios', () => {
     let res: Partial<Response>;

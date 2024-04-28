@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { Request, Response } from 'express';
 import { UsuarioTipo } from '../../constants';
-import { criarUsuario } from '../criacao'; // Import the criarUsuario function
+import { criarUsuario } from '../';
 
 describe('criarUsuario', () => {
     let req: Partial<Request>;

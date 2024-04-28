@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Request, Response } from 'express';
-import { listagemPerguntas } from '../Listagem'; // Import the function listagemPerguntas
+import { listagemPerguntas } from '../';
 
 jest.mock('../../common/validacaoTipoUsuario');
 

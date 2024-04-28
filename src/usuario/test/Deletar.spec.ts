@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Request, Response } from 'express';
-import { deletarUsuario } from '../deletar'; // Import the deletarUsuario function
+import { deletarUsuario } from '../';
 
 describe('deletarUsuario', () => {
     let req: Partial<Request>;
@@ -28,7 +28,7 @@ describe('deletarUsuario', () => {
         pool.query.mockResolvedValueOnce({ rowCount: 1 } as never);
         await deletarUsuario(req as Request, res as Response, pool);
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ message: `Removido "1" ao banco.` });
+        expect(res.json).toHaveBeenCalledWith({ message: `Removido "1" do banco.` });
     });
 
     it('Deve retornar 500 se houver um erro ao remover o usuário', async () => {

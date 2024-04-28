@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Pool } from 'pg';
-import { criarPergunta } from '../Criacao';
+import { criarPergunta } from '../';
 
 jest.mock('pg');
 jest.mock('express');
