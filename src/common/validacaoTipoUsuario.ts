@@ -22,7 +22,6 @@ export async function validacaoTipoUsuario(req: Request, res: Response, tipoUsua
       const retornoBanco = await pool.query('SELECT * FROM usuarios WHERE usuario = $1 AND senha = $2', [usuario, senha]);
       const usuarioBanco: UsuarioBanco = retornoBanco.rows?.pop();
 
-      //TODO aqui pode ser adicionado "!nãoForOrganizador"
       if (usuarioBanco.tipo === UsuarioTipo.ORGANIZADOR || usuarioBanco.tipo === tipoUsuarioPermissao) {
         next();
         return;
