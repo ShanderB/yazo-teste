@@ -27,12 +27,11 @@ describe('listagemPorId', () => {
         } as any;
     });
 
-    it('Deve retornar a pergunta e as respostas se a busca for bem-sucedida', async () => {
+    fit('Deve retornar a pergunta e as respostas se a busca for bem-sucedida', async () => {
         const mockPergunta = { id: '1', pergunta: 'Pergunta?' };
         const mockRespostas = [{ id: '1', resposta: 'Resposta 1' }, { id: '2', resposta: 'Resposta 2' }];
-        pool.query.mockResolvedValueOnce({ rows: [mockPergunta] } as never);
-        pool.query.mockResolvedValueOnce({ rows: mockRespostas } as never);
-
+        pool.query.mockResolvedValueOnce({ rows: [{ ...mockPergunta, respostas: mockRespostas }] } as never);
+    
         await listagemPorId(req as Request, res as Response, pool);
         expect(res.json).toHaveBeenCalledWith({
             pergunta: mockPergunta,
@@ -52,12 +51,11 @@ describe('listagemPorId', () => {
 
     it('Deve usar 1 como valor padrão para a página se nenhuma página for fornecida', async () => {
         delete (req.query as any).page;
-
+    
         const mockPergunta = { id: '1', pergunta: 'Pergunta?' };
         const mockRespostas = [{ id: '1', resposta: 'Resposta 1' }, { id: '2', resposta: 'Resposta 2' }];
-        pool.query.mockResolvedValueOnce({ rows: [mockPergunta] } as never);
-        pool.query.mockResolvedValueOnce({ rows: mockRespostas } as never);
-
+        pool.query.mockResolvedValueOnce({ rows: [{ ...mockPergunta, respostas: mockRespostas }] } as never);
+    
         await listagemPorId(req as Request, res as Response, pool);
         expect(res.json).toHaveBeenCalledWith({
             pergunta: mockPergunta,
