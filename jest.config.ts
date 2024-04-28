@@ -3,7 +3,7 @@ module.exports = {
     testEnvironment: 'node',
     testMatch: ['**/*.spec.ts'],
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.ts','!src/main.ts'],
+    collectCoverageFrom: ['src/**/*.ts', '!src/main.ts', '!**/*Routes.ts'],
     coverageDirectory: 'coverage',
     coverageReporters: ['html-spa'],
     coverageThreshold: {

@@ -33,8 +33,8 @@ export async function criarResposta(req: Request, res: Response, pool: Pool): Pr
     }
 
     const hasResposta = await pool.query(
-        'SELECT idPergunta, respondidoPor FROM respostas WHERE id = $1 AND respondidoPor = $2',
-        [idPergunta, dadosUsuario?.id]
+        'SELECT idPergunta, respondidoPor FROM respostas WHERE idPergunta = $1 AND respondidoPor = $2',
+        [idPergunta, dadosUsuario?.usuarioId]
     );
 
     if (hasResposta.rows.length) {
@@ -44,7 +44,7 @@ export async function criarResposta(req: Request, res: Response, pool: Pool): Pr
 
     const retornoBanco = await pool.query(
         'INSERT INTO respostas (idPergunta, respondidoPor, resposta) VALUES ($1, $2, $3)',
-        [idPergunta, dadosUsuario?.id, resposta]
+        [idPergunta, dadosUsuario?.usuarioId, resposta]
     );
 
     if (retornoBanco.rowCount === 1) {
