@@ -5,7 +5,8 @@
   "main": "main.ts",
   "scripts": {
     "start": "nodemon --exec ts-node src/main.ts",
-    "migrate": "ts-node migrations/migration.ts"
+    "migrate": "ts-node migrations/migration.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +19,12 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/pg": "^8.11.5",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
