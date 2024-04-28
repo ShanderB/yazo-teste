@@ -14,7 +14,7 @@ export async function efetuarLogin(req: Request, res: Response, pool: Pool) {
     }
 
     // Se a autenticação for bem-sucedida, crie um token JWT.
-    const token = jwt.sign({ usuario: usuario, senha, usuarioId: retornoBanco.rows[0].id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    const token = jwt.sign({ usuario: usuario, senha, usuarioId: retornoBanco.rows[0].id, tipo: retornoBanco.rows[0].tipo }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
     // Envie o token de volta para o cliente.
     res.json({ token });

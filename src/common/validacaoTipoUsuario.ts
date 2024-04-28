@@ -44,7 +44,7 @@ export function dadosJWT(req: Request, res: Response, pool: Pool): MinhaJwtPaylo
 
   try {
     const { usuario, senha, usuarioId } = jwt.verify(authHeader!, process.env.JWT_SECRET!) as MinhaJwtPayload;
-    dadosUsuario = { usuario, senha, id: usuarioId };
+    dadosUsuario = { usuario, senha, usuarioId };
 
   } catch (err) {
     console.log(err)

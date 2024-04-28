@@ -1,7 +1,9 @@
 import { JwtPayload } from "jsonwebtoken";
+import { UsuarioTipo } from "../constants";
 
 export interface MinhaJwtPayload extends JwtPayload {
     usuario: string;
     senha: string;
-    id: number;
+    usuarioId: number;
+    tipo?: UsuarioTipo;
 }
