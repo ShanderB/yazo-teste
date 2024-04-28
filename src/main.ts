@@ -10,7 +10,7 @@ import { Request, Response } from 'express';
 import { validacaoTipoUsuario } from './common/validacaoTipoUsuario';
 import { UsuarioTipo } from './constants';
 import { criarPergunta } from './pergunta/Criacao';
-import { criarResposta } from './resposta/resposta';
+import { criarResposta } from './resposta/Resposta';
 import { listagemPerguntas } from './pergunta/Listagem';
 import { efetuarLogin } from './login/Login';
 require('dotenv').config();

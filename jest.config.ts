@@ -3,15 +3,15 @@ module.exports = {
     testEnvironment: 'node',
     testMatch: ['**/*.spec.ts'],
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.ts'],
+    collectCoverageFrom: ['src/**/*.ts','!src/main.ts'],
     coverageDirectory: 'coverage',
     coverageReporters: ['html-spa'],
-    // coverageThreshold: {
-    //     global: {
-    //         branches: 80,
-    //         functions: 80,
-    //         lines: 80,
-    //         statements: 80,
-    //     },
-    // },
+    coverageThreshold: {
+        global: {
+            branches: 100,
+            functions: 100,
+            lines: 100,
+            statements: 100,
+        },
+    },
 }
