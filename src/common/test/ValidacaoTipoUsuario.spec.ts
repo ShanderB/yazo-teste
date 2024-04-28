@@ -12,6 +12,14 @@ describe('validacaoTipoUsuario', () => {
 
   jest.spyOn(pg as any, 'Pool').mockImplementation(() => mockPool as any);
 
+  let consoleLogSpy: jest.SpyInstance;
+  let consoleErrorSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+  });
+
   describe('validacaoTipoUsuario', () => {
     const req = {
       headers: {}
