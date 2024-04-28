@@ -18,9 +18,6 @@ export async function criarUsuario(req: Request, res: Response, pool: Pool) {
     if (hasUsuario.rows.length) {
         res.status(400).json({ message: 'Usuário já existe.' });
         return;
-    } else if (hasUsuario.rows[0]?.usuario.length > 40) {
-        res.status(400).json({ message: 'Nome do usuário excede o limite.' });
-        return;
     }
 
     //TODO salvar como jwt
