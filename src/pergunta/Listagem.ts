@@ -8,7 +8,6 @@ export async function listagemPerguntas(req: Request, res: Response, pool: Pool)
     const dadosUsuario = dadosJWT(req, res, pool);
 
     if (perguntas.rows.length) {
-        //TODO ver se tem como colocar interface aqui.
         const respostasUsuario = await pool.query('SELECT idPergunta FROM respostas WHERE respondidoPor = $1', [dadosUsuario?.id]);
 
         const mapPergunta = perguntas.rows.map((pergunta: { id: number, pergunta: string, criadopor: number }) => {

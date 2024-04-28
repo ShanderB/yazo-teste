@@ -26,14 +26,14 @@ export async function criarResposta(req: Request, res: Response, pool: Pool): Pr
         return;
     }
 
-    const hasResposta = await pool.query('SELECT pergunta, respondidoPor FROM respostas WHERE id = $1 AND respondidoPor = $2', [idPergunta, dadosUsuario?.id]);
+    const hasResposta = await pool.query('SELECT idPergunta, respondidoPor FROM respostas WHERE id = $1 AND respondidoPor = $2', [idPergunta, dadosUsuario?.id]);
 
     if (hasResposta.rows.length) {
         res.status(400).json({ message: 'Você já respondeu essa pergunta.' });
         return;
     }
 
-    const retornoBanco = await pool.query('INSERT INTO respostas (pergunta, respondidoPor, resposta) VALUES ($1, $2, $3)', [idPergunta, dadosUsuario?.id, resposta]);
+    const retornoBanco = await pool.query('INSERT INTO respostas (idPergunta, respondidoPor, resposta) VALUES ($1, $2, $3)', [idPergunta, dadosUsuario?.id, resposta]);
 
     if (retornoBanco.rowCount === 1) {
         res.status(200).json({ message: `Adicionado resposta ao banco.` });
