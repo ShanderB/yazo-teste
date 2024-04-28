@@ -109,7 +109,6 @@ describe('validacaoTipoUsuario', () => {
       mockPool.query.mockResolvedValue({ rows: [{ tipo: UsuarioTipo.ORGANIZADOR }], rowCount: 1 });
 
       await validacaoTipoUsuario(req, res, UsuarioTipo.PARTICIPANTE, mockPool, next);
-      console.log("aaaaaaaaaaaaaaaa", (res.json as any).mock.calls[0][0])
       expect(res.status).toHaveBeenCalledWith(401);
     });
   });
