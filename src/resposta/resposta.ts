@@ -1,7 +1,6 @@
 import { Pool } from "pg";
-import { dadosJWT, validacaoTipoUsuario } from "../common/validacaoTipoUsuario";
+import { dadosJWT } from "../common/validacaoTipoUsuario";
 import { Request, Response } from 'express';
-import { UsuarioTipo } from "../constants";
 
 export async function criarResposta(req: Request, res: Response, pool: Pool): Promise<void> {
 
@@ -22,7 +21,7 @@ export async function criarResposta(req: Request, res: Response, pool: Pool): Pr
 
     const dadosUsuario = dadosJWT(req, res, pool);
 
-    if (hasPergunta.rows[0].criadopor == dadosUsuario?.id) {
+    if (hasPergunta.rows[0].criadopor == dadosUsuario?.usuarioId) {
         res.status(400).json({ message: 'Não é possível responder uma pergunta criada por si mesmo.' });
         return;
     }
