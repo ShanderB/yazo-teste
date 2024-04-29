@@ -65,7 +65,7 @@ const SUCESSO_ADICIONAR_RESPOSTA = 'Adicionado resposta ao banco.';
  *               type: string
  *               description: Mensagem de erro.
  */
-export async function criarResposta(req: Request, res: Response, pool: Pool): Promise<void> {
+export default async function criarResposta(req: Request, res: Response, pool: Pool): Promise<void> {
     const { idPergunta, resposta } = req.body;
 
     if (!idPergunta || !resposta) {

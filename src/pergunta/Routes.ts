@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Pool } from 'pg';
-import { criarPergunta, listagemPerguntas, listagemPorId } from './';
+import { alteracaoPergunta, criarPergunta, deletarPergunta, listagemPerguntas, listagemPorId } from './';
 import { validacaoTipoUsuario } from '../common/validacaoTipoUsuario';
 import { UsuarioTipo } from '../constants';
 
@@ -16,6 +16,8 @@ export default function perguntaRoutes(pool: Pool) {
         ))
         .post('/', (req: Request, res: Response) => criarPergunta(req, res, pool))
         .get('/', (req: Request, res: Response) => listagemPerguntas(req, res, pool))
+        .delete('/:id', (req: Request, res: Response) => deletarPergunta(req, res, pool))
+        .put('/:id', (req: Request, res: Response) => alteracaoPergunta(req, res, pool))
 
         //Como a validação é um pouco diferente para os requests acima, preferi separar para evitar um código muito complexo de entender.
         //Rota responsável pela listagem de perguntas por ID com respostas, permitido apenas para organizadores.
