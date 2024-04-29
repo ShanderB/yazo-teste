@@ -40,6 +40,9 @@ Após finalizar, navege para `./coverage/index.html` e abra-o no seu navegador. 
 
 ## Decisões
 
+Rodar tudo por Docker para facilitar a execução em diferentes ambientes. Com apenas um comando você está com tudo rodando. Se eu tivesse utilizado processos standalone, seria necessário toda vez instalar o banco de dados, configurar completamente para depois iniciar o projeto, popular o banco para assim poder começar a ver toda a criação.
+Do modo atual, simplesmente é necessário ter conexão com a internet, um Docker e o navegador para acesso ao Swagger.<br>
+
 Não houve requisito técnico mas me atentei em finalizar 100% dos testes para manter tudo extritamente alinhado. Em qualquer mudança que altere o resultado, os testes irão apontar as diferenças.<br>
 
 ### Endpoints
