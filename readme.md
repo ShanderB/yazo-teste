@@ -1,3 +1,13 @@
+# Requisitos
+
+Caso vá executar somente pelo `docker`: <br>
+- Docker
+
+Caso queira executar manualmente: <br>
+- Docker (banco de dados)
+- NodeJS - 21.7.3 (versão utilizada por mim para desenvolver)
+<br><br>
+
 # Guia de como rodar o ambiente.
 Criei os arquivos para rodar com os comandos `bash build_projeto.sh (Linux)` e `cmd build_projeto.bat (Windows)` que é somente um `docker-compose up -d`.<br>
 
