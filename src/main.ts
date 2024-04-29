@@ -24,6 +24,22 @@ const swaggerOptions = {
       description: 'Esta documentação foi criada para auxiliar na análise de código para contratação de desenvolvedor PJ backend.',
     },
     servers: ['http://localhost:3000'],
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: `Cole aqui o token JWT para autenticação fornecido pela api "<b>/login</b>" junto com o "Bearer".
+        <br>Deverá ficar "Bearer 123token123".
+        <br>Caso contrário, o request será negado.`,
+        bearerFormat: 'JWT',
+        scheme: 'bearer',
+        authorizationUrl: 'http://localhost:3000/login',
+      },
+    },
+    security: [{
+      bearerAuth: []
+    }]
   },
   apis: ['./**/*.ts'],
 }
