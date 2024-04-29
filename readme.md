@@ -1,5 +1,7 @@
 # Requisitos
 
+Vaga de backend para o projeto: https://github.com/Yazo-Connecting-Experiences/Backend-Dev-Challenge
+
 Caso vá executar somente pelo `docker`: <br>
 - Docker
 
