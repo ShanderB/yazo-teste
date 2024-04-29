@@ -6,11 +6,30 @@ import { efetuarLogin } from './login/Login';
 import usuarioRoutes from './usuario/Routes';
 import perguntaRoutes from './pergunta/Routes';
 import respostaRoutes from './resposta/Routes';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 require('dotenv').config();
 
 // Configurando o express
 const app = express();
 app.use(bodyParser.json());
+
+//Configurando swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'APIs para cadastro e listagem de usuários, perguntas e respostas.',
+      version: '1.0.0',
+      description: 'Esta documentação foi criada para auxiliar na análise de código para contratação de desenvolvedor PJ backend.',
+    },
+    servers: ['http://localhost:3000'],
+  },
+  apis: ['./**/*.ts'],
+}
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Configurando a conexão com o PostgreSQL
 const pool = new Pool({
