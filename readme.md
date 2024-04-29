@@ -19,14 +19,19 @@ Todos os endpoints estão configurados e documentados com o swagger na url `loca
 
 Ao entrar na página do Swagger, faça um request na API `/login`. Existem dois usuários já cadastrados:<br>
  - O usuário `admin` com senha `admin` é um usuário com permissões de `Organizador`, no caso um usuário tipo `1`.<br>
- - O usuário `test` com senha `test` é um usuário com permissões de `Participante`, no caso um usuário tipo `2`.<br><br>
+ - O usuário `test` com senha `test` é um usuário com permissões de `Participante`, no caso um usuário tipo `2`.<br>
+![Imagem dos testes em 100%](fotos-readme/apiLogin.png)<br><br>
 
 Insira o usuário que deseja verificar o comportamento e emita o request.<br>
 Será retornado o response com o token de autenticação. Esse token deve ser inserido no botão `Authorize` no topo da página. Insira a palavra `Bearer` seguido do token que você acabou de copiar.<br>
-Após isso, clique no botão de autorização e será possível fazer o request em todos os endpoins.<br><br>
+Após isso, clique no botão de autorização e será possível fazer o request em todos os endpoins.
+![Imagem dos testes em 100%](fotos-readme/botao.png)<br><br>
+![Imagem dos testes em 100%](fotos-readme/auth.png)<br><br>
 
-Para verificar os testes e as coberturas, digite na raiz do projeto `npm test`. Aguarde a execução de todos os testes.<br>
-Após finalizar, navege para `./coverage/index.html` e abra-o no seu navegador. Será apresentado todos os módulos e suas respectivas coberturas.<br><br>
+Para verificar os testes e as coberturas, é necessário executar o projeto manualmente.<br>
+Digite na raiz do projeto `npm test`. Aguarde a execução de todos os testes.<br>
+Após finalizar, navege para `./coverage/index.html` e abra-o no seu navegador. Será apresentado todos os módulos e suas respectivas coberturas (todos estão 100%).<br>
+![Imagem dos testes em 100%](fotos-readme/cobertura.png)<br><br>
 
 
 # Explicando as decisões técnicas;
