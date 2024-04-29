@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Request, Response } from 'express';
-import { criarResposta } from '../Resposta'; // Import the criarResposta function
+import { criarResposta } from '../Criacao'; // Import the criarResposta function
 import jwt from 'jsonwebtoken';
 
 describe('criarResposta', () => {

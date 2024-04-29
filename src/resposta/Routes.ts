@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Pool } from 'pg';
-import { criarResposta } from './Resposta';
+import { criarResposta } from './Criacao';
 import { validacaoTipoUsuario } from '../common/validacaoTipoUsuario';
 import { UsuarioTipo } from '../constants';
 
