@@ -8,6 +8,50 @@ const ERRO_PERGUNTA_EXISTE = 'Pergunta já existe.';
 const ERRO_BANCO = 'Erro ao adicionar ao banco.';
 const SUCESSO_BANCO = 'Adicionado a pergunta ao banco.';
 
+/**
+ * @swagger
+ * /criarPergunta:
+ *   post:
+ *     tags:
+ *       - Pergunta
+ *     description: Cria uma nova pergunta.
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: Pergunta a ser criada.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             pergunta:
+ *               type: string
+ *               description: Texto da pergunta.
+ *     responses:
+ *       200:
+ *         description: Pergunta criada com sucesso.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de sucesso.
+ *       400:
+ *         description: Erro ao criar a pergunta.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ *       500:
+ *         description: Erro no servidor.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ */
 export default async function criarPergunta(req: Request, res: Response, pool: Pool) {
     const { pergunta } = req.body;
 

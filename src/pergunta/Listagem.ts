@@ -6,6 +6,42 @@ import { Request, Response } from 'express';
 // Mensagens de erro
 const ERRO_SEM_DADOS = 'Sem dados no banco.';
 
+/**
+ * @swagger
+ * /listagemPerguntas:
+ *   get:
+ *     tags:
+ *       - Pergunta
+ *     description: Lista todas as perguntas.
+ *     responses:
+ *       200:
+ *         description: Lista de perguntas.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: ID da pergunta.
+ *               pergunta:
+ *                 type: string
+ *                 description: Texto da pergunta.
+ *               criadoPor:
+ *                 type: integer
+ *                 description: ID do usuário que criou a pergunta.
+ *               respondido:
+ *                 type: boolean
+ *                 description: Indica se a pergunta foi respondida pelo usuário.
+ *       400:
+ *         description: Sem dados no banco.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ */
 export default async function listagemPerguntas(req: Request, res: Response, pool: Pool) {
     // Consulta para buscar todas as perguntas
     const perguntas = await pool.query('SELECT * FROM perguntas');
