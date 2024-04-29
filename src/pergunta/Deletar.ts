@@ -53,6 +53,9 @@ export default async function deletarPergunta(req: Request, res: Response, pool:
         return res.status(404).json({ message: `Pergunta com id ${id} não encontrada.` });
     }
 
+    // Deletar todas as respostas relacionadas à pergunta
+    await pool.query('DELETE FROM respostas WHERE idPergunta = $1', [id]);
+
     const response = await pool.query('DELETE FROM perguntas WHERE id = $1', [id]);
     if (response.rowCount === 1) {
         res.status(200).json({ message: SUCESSO_REMOCAO(id) });

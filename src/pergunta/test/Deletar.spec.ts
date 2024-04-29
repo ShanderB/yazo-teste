@@ -29,12 +29,14 @@ describe('deletarPergunta', () => {
         it('Deve retornar 200 se a pergunta for deletada com sucesso', async () => {
             pool.query.mockResolvedValueOnce({ rows: [], rowCount: 1 } as never);
             pool.query.mockResolvedValueOnce({ rows: [], rowCount: 1 } as never);
+            pool.query.mockResolvedValueOnce({ rows: [], rowCount: 1 } as never);
             await deletarPergunta(req as Request, res as Response, pool);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({ message: `Removida a pergunta "${req.params!.id}" do banco.` });
         });
     
         it('Deve retornar 500 se houver um erro ao deletar a pergunta', async () => {
+            pool.query.mockResolvedValueOnce({ rows: [], rowCount: 1 } as never);
             pool.query.mockResolvedValueOnce({ rows: [], rowCount: 1 } as never);
             pool.query.mockResolvedValueOnce({ rows: [], rowCount: undefined } as never);
             await deletarPergunta(req as Request, res as Response, pool);
