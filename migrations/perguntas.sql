@@ -1,8 +1,7 @@
 CREATE TABLE IF NOT EXISTS perguntas (
   id SERIAL PRIMARY KEY,
   pergunta TEXT,
-  criadoPor INTEGER,
-  FOREIGN KEY (criadoPor) REFERENCES usuarios(id)
+  criadoPor INTEGER
 );
 
 INSERT INTO perguntas (pergunta, criadoPor) VALUES ('Qual é a sua cor favorita?', 1);

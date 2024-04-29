@@ -11,3 +11,18 @@ services:
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432/tcp"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    command: sh -c "npm install && npm run migrate && npm start"
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      DB_USER: admin
+      DB_HOST: db
+      DB_DATABASE: yazo
+      DB_PASSWORD: admin
+      DB_PORT: 5432
