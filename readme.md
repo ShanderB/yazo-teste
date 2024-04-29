@@ -19,14 +19,14 @@ Após finalizar, navege para `./coverage/index.html` e abra-o no seu navegador. 
 
 # Explicando as decisões técnicas;
 ## Dependências
-Node.js - Requisitos da vaga.<br>
-TypeScript - Requisitos da vaga.<br>
-PostgreSQL - Requisitos da vaga.<br>
-Express - Devido ser o mais comum, utilizei para facilitar o entendimento na análise do código. Poderia ter utilizado, por exemplo, o AdonisJS mas devido a não tão conhecido em relação ao Express, fui no mais fácil.<br>
-Jsonwebtoken - Fornece uma maneira fácil de criar e verificar tokens JWT. Ela suporta a assinatura de tokens com algoritmos HMAC, RSA e ECDSA, e também suporta todas as reivindicações padrão do JWT.<br>
-PG - Escolhi esta biblioteca por sua leveza e eficiência. Ela atende perfeitamente às necessidades dos CRUDs que foram criados neste projeto, fornecendo uma interface simples e direta para interagir com o PostgreSQL.<br>
-Swagger - Escolhi esta ferramenta por ser a mais comumente utilizada para documentação de APIs. Ela oferece uma interface amigável e interativa para visualizar e testar a API, facilitando o entendimento e a utilização da mesma.<br>
-Jest - Escolhi esta biblioteca por ser uma das mais completas ferramentas de teste para TypeScript. Ela oferece testes em paralelo, mock de funções e cobertura de código, que eram as necessárias para utilizar o projeto.<br>
+- Node.js - Requisitos da vaga.<br>
+- TypeScript - Requisitos da vaga.<br>
+- PostgreSQL - Requisitos da vaga.<br>
+- Express - Devido ser o mais comum, utilizei para facilitar o entendimento na análise do código. Poderia ter utilizado, por exemplo, o AdonisJS mas devido a não tão conhecido em relação ao Express, fui no mais fácil.<br>
+- Jsonwebtoken - Fornece uma maneira fácil de criar e verificar tokens JWT. Ela suporta a assinatura de tokens com algoritmos HMAC, RSA e ECDSA, e também suporta todas as reivindicações padrão do JWT.<br>
+- PG - Escolhi esta biblioteca por sua leveza e eficiência. Ela atende perfeitamente às necessidades dos CRUDs que foram criados neste projeto, fornecendo uma interface simples e direta para interagir com o PostgreSQL.<br>
+- Swagger - Escolhi esta ferramenta por ser a mais comumente utilizada para documentação de APIs. Ela oferece uma interface amigável e interativa para visualizar e testar a API, facilitando o entendimento e a utilização da mesma.<br>
+- Jest - Escolhi esta biblioteca por ser uma das mais completas ferramentas de teste para TypeScript. Ela oferece testes em paralelo, mock de funções e cobertura de código, que eram as necessárias para utilizar o projeto.<br>
 
 ## Decisões
 
