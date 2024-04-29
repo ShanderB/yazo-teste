@@ -74,7 +74,7 @@ export default async function criarPergunta(req: Request, res: Response, pool: P
     const dadosUsuario = dadosJWT(req, res, pool);
 
     // Consulta para inserir a nova pergunta
-    const retornoBanco = await pool.query('INSERT INTO perguntas (pergunta, criadoPor) VALUES ($1, $2)', [pergunta, dadosUsuario?.id]);
+    const retornoBanco = await pool.query('INSERT INTO perguntas (pergunta, criadoPor) VALUES ($1, $2)', [pergunta, dadosUsuario?.usuarioId]);
 
     // Verifica se a inserção foi bem-sucedida
     if (retornoBanco.rowCount === 1) {

@@ -52,8 +52,7 @@ export default async function listagemPerguntas(req: Request, res: Response, poo
     // Verifica se existem perguntas
     if (perguntas.rows.length) {
         // Consulta para buscar as respostas do usuário
-        const respostasUsuario = await pool.query('SELECT idPergunta FROM respostas WHERE respondidoPor = $1', [dadosUsuario?.id]);
-
+        const respostasUsuario = await pool.query('SELECT * FROM respostas WHERE respondidoPor = $1', [dadosUsuario?.usuarioId]);
         // Mapeia as perguntas para incluir se foram respondidas pelo usuário
         const perguntasRespondidas = perguntas.rows.map((pergunta: { id: number, pergunta: string, criadopor: number }) => {
             const respondido = respostasUsuario.rows.some((resposta: RespostaBanco) => resposta.idpergunta === pergunta.id);
