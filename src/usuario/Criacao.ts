@@ -8,6 +8,58 @@ const ERRO_USUARIO_EXISTE = 'Usuário já existe.';
 const ERRO_ADICIONAR_USUARIO = 'Erro ao adicionar novo usuário ao banco.';
 const SUCESSO_ADICIONAR_USUARIO = (usuario: string) => `Adicionado "${usuario}" ao banco.`;
 
+/**
+ * @swagger
+ * /criarUsuario:
+ *   post:
+ *     tags:
+ *      - Usuário
+ *     description: Cria um novo usuário.
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: Dados do usuário
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             usuario:
+ *               type: string
+ *               maxLength: 40
+ *               description: Nome do usuário.
+ *             senha:
+ *               type: string
+ *               description: Senha do usuário.
+ *             tipo:
+ *               type: integer
+ *               description: Tipo do usuário. Deve ser 1 ou 2.
+ *               enum: [1, 2]
+ *     responses:
+ *       200:
+ *         description: Usuário criado com sucesso.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de sucesso com o usuário inserido na resposta.
+ *       400:
+ *         description: Erro na criação do usuário.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ *       500:
+ *         description: Erro interno do servidor.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ */
 export default async function criarUsuario(req: Request, res: Response, pool: Pool) {
     const { usuario, senha, tipo } = req.body;
 
