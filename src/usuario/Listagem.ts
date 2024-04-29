@@ -6,7 +6,7 @@ const ERRO_SEM_DADOS = 'Sem dados no banco.';
 
 /**
  * @swagger
- * /listagemUsuarios:
+ * /usuario:
  *   get:
  *     tags:
  *       - Usuário

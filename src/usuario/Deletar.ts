@@ -7,7 +7,7 @@ const ERRO_REMOCAO = 'Erro ao remover do banco.';
 
 /**
  * @swagger
- * /deletarUsuario/{id}:
+ * /usuario/{id}:
  *   delete:
  *     tags:
  *       - Usuário

@@ -7,7 +7,7 @@ const ERRO_ATUALIZACAO = 'Erro ao atualizar no banco.';
 
 /**
  * @swagger
- * /alteracaoUsuario/{id}:
+ * /usuario/{id}:
  *   put:
  *     tags:
  *       - Usuário

@@ -8,7 +8,7 @@ const ERRO_BUSCAR_RESPOSTAS = 'Erro ao buscar respostas.';
 
 /**
  * @swagger
- * /listagemPorId/{id}:
+ * /pergunta/{id}:
  *   get:
  *     tags:
  *       - Pergunta

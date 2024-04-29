@@ -10,7 +10,7 @@ const SUCESSO_BANCO = 'Adicionado a pergunta ao banco.';
 
 /**
  * @swagger
- * /criarPergunta:
+ * /pergunta:
  *   post:
  *     tags:
  *       - Pergunta

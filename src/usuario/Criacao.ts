@@ -10,7 +10,7 @@ const SUCESSO_ADICIONAR_USUARIO = (usuario: string) => `Adicionado "${usuario}" 
 
 /**
  * @swagger
- * /criarUsuario:
+ * /usuario:
  *   post:
  *     tags:
  *      - Usuário

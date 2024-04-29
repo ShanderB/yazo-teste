@@ -10,6 +10,61 @@ const ERRO_JA_RESPONDEU = 'Você já respondeu essa pergunta.';
 const ERRO_ADICIONAR_RESPOSTA = 'Erro ao adicionar resposta ao banco.';
 const SUCESSO_ADICIONAR_RESPOSTA = 'Adicionado resposta ao banco.';
 
+/**
+ * @swagger
+ * /resposta:
+ *   post:
+ *     tags:
+ *       - Resposta
+ *     description: Cria uma nova resposta para uma pergunta.
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: Resposta a ser criada.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             idPergunta:
+ *               type: integer
+ *               description: ID da pergunta a ser respondida.
+ *             resposta:
+ *               type: string
+ *               description: Texto da resposta.
+ *     responses:
+ *       200:
+ *         description: Resposta criada com sucesso.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de sucesso.
+ *       400:
+ *         description: Erro ao criar a resposta.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ *       404:
+ *         description: Pergunta não encontrada.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ *       500:
+ *         description: Erro no servidor.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: Mensagem de erro.
+ */
 export async function criarResposta(req: Request, res: Response, pool: Pool): Promise<void> {
     const { idPergunta, resposta } = req.body;
 
